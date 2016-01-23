@@ -25,6 +25,6 @@ Usage:
 Code from:
 ---------
 
-.. _tornado-babel: https://github.com/openlabs/tornado-babel
-.. _django-babel: https://github.com/python-babel/django-babel
+tornado-babel: https://github.com/openlabs/tornado-babel
+django-babel: https://github.com/python-babel/django-babel
 
