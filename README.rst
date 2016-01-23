@@ -5,7 +5,9 @@ aiohttp_babel
 aiohttp_babel adds i18n and l10n support to aiohttp.
 
 Usage:
+
 .. code-block:: python
+
     import aiohttp_jinja2
     from aiohttp.web import Application
     from aiohttp_babel.middlewares import babel_middleware
@@ -23,5 +25,6 @@ Usage:
 Code from:
 ---------
 
-* `tornado-babel <https://github.com/openlabs/tornado-babel>`_
-* `django-babel <https://github.com/python-babel/django-babel>`_
+.. _tornado-babel: https://github.com/openlabs/tornado-babel
+.. _django-babel: https://github.com/python-babel/django-babel
+

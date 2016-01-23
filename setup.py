@@ -7,7 +7,7 @@ from setuptools import find_packages
 
 setup(
     name = "aiohttp-babel",
-    version = "0.0.1",
+    version = "0.0.3",
     packages = find_packages(),
 
     install_requires = [
@@ -21,6 +21,5 @@ setup(
     description = "Babel localisation support for aiohttp",
     license = "BSD",
     keywords = "aiohttp locale babel localisation",
-    url = "https://github.com/jie/aiohttp-babel",
+    url = "https://github.com/jie/aiohttp_babel",
 )
-
