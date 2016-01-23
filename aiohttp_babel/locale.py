@@ -84,7 +84,7 @@ def load_gettext_translations(directory, domain):
         except Exception as e:
             logging.error("Cannot load translation for '%s': %s", lang, str(e))
             continue
-    _supported_locales = frozenset(_translations.keys() + [_default_locale])
+    _supported_locales = frozenset([i for i in _translations.keys()] + [_default_locale])
     _use_gettext = True
     logging.info("Supported locales: %s", sorted(_supported_locales))
 
