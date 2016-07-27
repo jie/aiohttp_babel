@@ -61,7 +61,8 @@ def set_default_locale(code):
     global _default_locale
     global _supported_locales
     _default_locale = code
-    _supported_locales = frozenset(list(_translations.keys()) + [_default_locale])
+    _supported_locales = frozenset(
+        list(_translations.keys()) + [_default_locale])
 
 
 def load_gettext_translations(directory, domain):
@@ -84,7 +85,8 @@ def load_gettext_translations(directory, domain):
         except Exception as e:
             logging.error("Cannot load translation for '%s': %s", lang, str(e))
             continue
-    _supported_locales = frozenset([i for i in _translations.keys()] + [_default_locale])
+    _supported_locales = frozenset(
+        list(_translations.keys()) + [_default_locale])
     _use_gettext = True
     logging.info("Supported locales: %s", sorted(_supported_locales))
 
