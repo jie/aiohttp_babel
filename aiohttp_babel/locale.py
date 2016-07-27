@@ -61,7 +61,7 @@ def set_default_locale(code):
     global _default_locale
     global _supported_locales
     _default_locale = code
-    _supported_locales = frozenset(_translations.keys() + [_default_locale])
+    _supported_locales = frozenset(list(_translations.keys()) + [_default_locale])
 
 
 def load_gettext_translations(directory, domain):
