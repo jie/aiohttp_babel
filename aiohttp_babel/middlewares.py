@@ -24,8 +24,8 @@ def babel_middleware(app, handler):
         _code = request.cookies.get('locale', False)
         if not _code:
             # get locale from browser
-            _code = str(locale.Locale.parse(
-                request.headers['ACCEPT-LANGUAGE'], sep='-'))
+            locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
+            _code = str(locale.Locale.parse(locale_code, sep='-'))
 
         _locale = locale.get(_code)
         _thread_locals.locale = request.locale = _locale
