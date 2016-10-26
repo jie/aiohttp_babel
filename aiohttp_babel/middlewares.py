@@ -20,7 +20,13 @@ _ = make_lazy_gettext(lambda: _thread_locals.locale.translate)
 def babel_middleware(app, handler):
     @asyncio.coroutine
     def middleware(request):
-        _code = request.cookies.get('locale', 'en_US')
+        # get locale from cookie
+        _code = request.cookies.get('locale', False)
+        if not _code:
+            # get locale from browser
+            locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
+            _code = str(locale.Locale.parse(locale_code, sep='-'))
+
         _locale = locale.get(_code)
         _thread_locals.locale = request.locale = _locale
         response = yield from handler(request)
