@@ -132,12 +132,24 @@ class Locale(BabelCoreLocale):
             cls._cache[code] = locale
         return cls._cache[code]
 
-    def translate(self, message, plural_message=None, count=None):
+    def translate(self, message, plural_message=None, count=None, **kwargs):
+        """
+        Translates message and returns new message as str
+
+        :param str message: original message
+        :param str plural_message: plural format of the message  
+        :param int count: number proper plural message for generation
+        :param kwargs: named placeholders for message templating
+        :return str: translated message 
+        """
         if plural_message is not None:
             assert count is not None
-            return self.translations.ungettext(message, plural_message, count)
+            message = self.translations.ungettext(
+                message, plural_message, count)
         else:
-            return self.translations.ugettext(message)
+            message = self.translations.ugettext(message)
+
+        return message.format(**kwargs)
 
     def format_datetime(self, datetime=None, format='medium', tzinfo=None):
         """
