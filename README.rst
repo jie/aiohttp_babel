@@ -17,10 +17,10 @@ Usage:
 
     set_default_locale('en_GB')  # set default locale, if necessary
     # load compiled locales
-    load_gettext_translations('/path/to/locales'), 'domain')
+    load_gettext_translations('/path/to/locales', 'domain')
 
     jinja_loader = jinja2.FileSystemLoader('./templates')
-    app = Application(middlewares=babel_middleware)
+    app = Application(middlewares=[babel_middleware])
 
     aiohttp_jinja2.setup(app, loader=jinja_loader)
     jinja_env = aiohttp_jinja2.get_env(app)
