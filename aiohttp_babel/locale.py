@@ -4,7 +4,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     The locale support of tornado as such is pretty basic and does not offer
-    support for merging translation catalogs and several other features most 
+    support for merging translation catalogs and several other features most
     multi language applications require.
 
     This module tries to retain the same API as that of tornado.locale while
@@ -19,7 +19,7 @@
 
     :changes:
         12/11/23 - E. PASCUAL (Centre Scientifique et Technique du Batiment):
-            fixed implementation of translations merge process in 
+            fixed implementation of translations merge process in
             load_gettext_translations
 """
 import gettext
@@ -137,10 +137,10 @@ class Locale(BabelCoreLocale):
         Translates message and returns new message as str
 
         :param str message: original message
-        :param str plural_message: plural format of the message  
+        :param str plural_message: plural format of the message
         :param int count: number proper plural message for generation
         :param kwargs: named placeholders for message templating
-        :return str: translated message 
+        :return str: translated message
         """
         if plural_message is not None:
             assert count is not None
@@ -149,7 +149,7 @@ class Locale(BabelCoreLocale):
         else:
             message = self.translations.ugettext(message)
 
-        return message.format(**kwargs)
+        return message.format(**kwargs) if len(kwargs) else message
 
     def format_datetime(self, datetime=None, format='medium', tzinfo=None):
         """
