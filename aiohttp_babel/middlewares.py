@@ -1,6 +1,7 @@
 import asyncio
 from speaklater import is_lazy_string, make_lazy_string
 from aiohttp_babel import locale
+from babel.core import UnknownLocaleError
 from threading import local
 
 _thread_locals = local()
@@ -25,7 +26,10 @@ def babel_middleware(app, handler):
         if not _code:
             # get locale from browser
             locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
-            _code = str(locale.Locale.parse(locale_code, sep='-'))
+            try:
+                _code = str(locale.Locale.parse(locale_code, sep='-'))
+            except (ValueError, UnknownLocaleError):
+                pass
 
         _locale = locale.get(_code)
         _thread_locals.locale = request.locale = _locale
