@@ -90,6 +90,42 @@ def load_gettext_translations(directory, domain):
     logging.info("Supported locales: %s", sorted(_supported_locales))
 
 
+def _default_locale_detector(request):
+    _code = request.cookies.get('locale', False)
+    if not _code:
+        # get locale from browser
+        locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
+        try:
+            _code = str(locale.Locale.parse(locale_code, sep='-'))
+        except (ValueError, UnknownLocaleError):
+            pass
+
+    return _code
+
+_locale_detector = _default_locale_detector
+
+
+def set_locale_detector(detector):
+    """Sets language detector function.
+
+    Detector function takes a request and return a locale code.
+    >>> def detector(request):
+    ...     if request.url.host == 'es.example.com':
+    ...         return 'es'
+    ...     elif request.url.host == 'zh.example.com':
+    ...         return 'zh'
+    ...     else:
+    ...         return 'en'
+    """
+    global _locale_detector
+    _locale_detector = detector
+
+
+def detect_locale(request):
+    global _locale_detector
+    return _locale_detector(request)
+
+
 class Locale(BabelCoreLocale):
 
     """Object representing a locale.

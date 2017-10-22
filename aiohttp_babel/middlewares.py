@@ -22,17 +22,8 @@ def babel_middleware(app, handler):
     @asyncio.coroutine
     def middleware(request):
         # get locale from cookie
-        _code = request.cookies.get('locale', False)
-        if not _code:
-            # get locale from browser
-            locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
-            try:
-                _code = str(locale.Locale.parse(locale_code, sep='-'))
-            except (ValueError, UnknownLocaleError):
-                pass
-
-        _locale = locale.get(_code)
-        _thread_locals.locale = request.locale = _locale
+        _code = locale.detect_locale(request)
+        _thread_locals.locale = request.locale = locale.get(_code)
         response = yield from handler(request)
         return response
     return middleware
