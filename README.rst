@@ -11,13 +11,26 @@ Usage:
     import aiohttp_jinja2
     from aiohttp.web import Application
     from aiohttp_babel.locale import (load_gettext_translations,
-                                      set_default_locale)
+                                      set_default_locale,
+                                      set_locale_detector)
     from aiohttp_babel.middlewares import babel_middleware, _
 
 
     set_default_locale('en_GB')  # set default locale, if necessary
     # load compiled locales
     load_gettext_translations('/path/to/locales', 'domain')
+
+    # you can use your own locale detection method, if necessary.
+    # aiohttp_babel checks cookie parameter `locale` or `Accept-Language`
+    # header by default.
+    def detector(request):
+        if request.url.host == 'es.example.com':
+            return 'es'
+        elif request.url.host == 'zh.example.com':
+            return 'zh'
+        else:
+            return 'en'
+    set_locale_detector(detector)
 
     jinja_loader = jinja2.FileSystemLoader('./templates')
     app = Application(middlewares=[babel_middleware])
