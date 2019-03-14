@@ -7,7 +7,7 @@ from setuptools import find_packages
 
 setup(
     name = "aiohttp-babel",
-    version = "0.0.6",
+    version = "0.0.7-ten",
     packages = find_packages(),
 
     install_requires = [
