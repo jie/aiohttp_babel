@@ -1,7 +1,6 @@
 import asyncio
 from speaklater import is_lazy_string, make_lazy_string
 from aiohttp_babel import locale
-from babel.core import UnknownLocaleError
 from threading import local
 
 _thread_locals = local()
@@ -14,6 +13,14 @@ def make_lazy_gettext(lookup_func):
         return make_lazy_string(lookup_func(), string, *args, **kwargs)
     return lazy_gettext
 
+
+def translate(source):
+    return _thread_locals.locale.translate(source)
+
+
+lazy_translate = make_lazy_gettext(lambda: translate)
+
+# next line is keep just for backward compatibility
 _ = make_lazy_gettext(lambda: _thread_locals.locale.translate)
 
 

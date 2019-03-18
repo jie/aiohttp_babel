@@ -25,8 +25,10 @@
 import logging
 import os
 
+from aiohttp_babel import locale
 from babel.support import Translations, NullTranslations
 from babel.core import Locale as BabelCoreLocale
+from babel.core import UnknownLocaleError
 from babel import dates
 
 _default_locale = "en_US"
@@ -94,7 +96,7 @@ def _default_locale_detector(request):
     _code = request.cookies.get('locale', False)
     if not _code:
         # get locale from browser
-        locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')[:2]
+        locale_code = request.headers.get('ACCEPT-LANGUAGE', 'en')
         try:
             _code = str(locale.Locale.parse(locale_code, sep='-'))
         except (ValueError, UnknownLocaleError):
