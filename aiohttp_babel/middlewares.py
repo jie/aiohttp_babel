@@ -1,4 +1,3 @@
-import asyncio
 from speaklater import is_lazy_string, make_lazy_string
 from aiohttp_babel import locale
 from threading import local
@@ -24,14 +23,12 @@ lazy_translate = make_lazy_gettext(lambda: translate)
 _ = make_lazy_gettext(lambda: _thread_locals.locale.translate)
 
 
-@asyncio.coroutine
-def babel_middleware(app, handler):
-    @asyncio.coroutine
-    def middleware(request):
+async def babel_middleware(app, handler):
+    async def middleware(request):
         # get locale from cookie
         _code = locale.detect_locale(request)
         _thread_locals.locale = request.locale = locale.get(_code)
-        response = yield from handler(request)
+        response = await handler(request)
         return response
     return middleware
 
